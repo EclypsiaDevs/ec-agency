@@ -1,1 +1,199 @@
-!function(t){"use strict";var e=jQuery.fn.revolution,a={alias:"KenBurns Min JS",name:"revolution.extensions.kenburn.min.js",min_core:"5.4",version:"1.3.1"};jQuery.extend(!0,e,{stopKenBurn:function(t){if("stop"===e.compare_version(a).check)return!1;void 0!=t.data("kbtl")&&t.data("kbtl").pause()},startKenBurn:function(t,r,n){if("stop"===e.compare_version(a).check)return!1;var i=t.data(),s=t.find(".defaultimg"),o=s.data("lazyload")||s.data("src"),d=(i.owidth,i.oheight,"carousel"===r.sliderType?r.carousel.slide_width:r.ul.width()),l=r.ul.height();if(t.data("kbtl")&&t.data("kbtl").kill(),n=n||0,0==t.find(".tp-kbimg").length){var h=s.data("mediafilter");h=void 0===h?"":h,t.append('<div class="tp-kbimg-wrap '+h+'" style="z-index:2;width:100%;height:100%;top:0px;left:0px;position:absolute;"><img class="tp-kbimg" src="'+o+'" style="position:absolute;" width="'+i.owidth+'" height="'+i.oheight+'"></div>'),t.data("kenburn",t.find(".tp-kbimg"))}var p=function(t,e,a,r,n,i,s){var o=t*a,d=e*a,l=Math.abs(r-o),h=Math.abs(n-d),p=new Object;return p.l=(0-i)*l,p.r=p.l+o,p.t=(0-s)*h,p.b=p.t+d,p.h=i,p.v=s,p};void 0!=t.data("kbtl")&&(t.data("kbtl").kill(),t.removeData("kbtl"));var u=t.data("kenburn"),c=u.parent(),b=function(t,e,a){var r=a.scalestart/100,n=a.scaleend/100,i=void 0!=a.offsetstart?a.offsetstart.split(" ")||[0,0]:[0,0],s=void 0!=a.offsetend?a.offsetend.split(" ")||[0,0]:[0,0];a.bgposition="center center"==a.bgposition?"50% 50%":a.bgposition;var o=new Object;a.owidth,a.oheight,a.owidth,a.oheight;if(o.start=new Object,o.starto=new Object,o.end=new Object,o.endo=new Object,o.start.width=t,o.start.height=o.start.width/a.owidth*a.oheight,o.start.height<e){var d=e/o.start.height;o.start.height=e,o.start.width=o.start.width*d}o.start.transformOrigin=a.bgposition,o.start.scale=r,o.end.scale=n,a.rotatestart=0===a.rotatestart?.01:a.rotatestart,o.start.rotation=a.rotatestart+"deg",o.end.rotation=a.rotateend+"deg";var l=function(t,e,r,n,i){var s=a.bgposition.split(" ")||"center center",o="center"==s[0]?"50%":"left"==s[0]||"left"==s[1]?"0%":"right"==s[0]||"right"==s[1]?"100%":s[0],d="center"==s[1]?"50%":"top"==s[0]||"top"==s[1]?"0%":"bottom"==s[0]||"bottom"==s[1]?"100%":s[1];o=parseInt(o,0)/100||0,d=parseInt(d,0)/100||0;var l=new Object;return l.start=p(i.start.width,i.start.height,i.start.scale,e,r,o,d),l.end=p(i.start.width,i.start.height,i.end.scale,e,r,o,d),l}(0,t,e,0,o);i[0]=parseFloat(i[0])+l.start.l,s[0]=parseFloat(s[0])+l.end.l,i[1]=parseFloat(i[1])+l.start.t,s[1]=parseFloat(s[1])+l.end.t;var h=l.start.r-l.start.l,u=l.start.b-l.start.t,c=l.end.r-l.end.l,b=l.end.b-l.end.t;return i[0]=i[0]>0?0:h+i[0]<t?t-h:i[0],s[0]=s[0]>0?0:c+s[0]<t?t-c:s[0],i[1]=i[1]>0?0:u+i[1]<e?e-u:i[1],s[1]=s[1]>0?0:b+s[1]<e?e-b:s[1],o.starto.x=i[0]+"px",o.starto.y=i[1]+"px",o.endo.x=s[0]+"px",o.endo.y=s[1]+"px",o.end.ease=o.endo.ease=a.ease,o.end.force3D=o.endo.force3D=!0,o}(d,l,i),g=new punchgs.TimelineLite;if(g.pause(),b.start.transformOrigin="0% 0%",b.starto.transformOrigin="0% 0%",g.add(punchgs.TweenLite.fromTo(u,i.duration/1e3,b.start,b.end),0),g.add(punchgs.TweenLite.fromTo(c,i.duration/1e3,b.starto,b.endo),0),void 0!==i.blurstart&&void 0!==i.blurend&&(0!==i.blurstart||0!==i.blurend)){var f={a:i.blurstart},v={a:i.blurend,ease:b.endo.ease},w=new punchgs.TweenLite(f,i.duration/1e3,v);w.eventCallback("onUpdate",function(t){punchgs.TweenLite.set(t,{filter:"blur("+f.a+"px)",webkitFilter:"blur("+f.a+"px)"})},[c]),g.add(w,0)}g.progress(n),g.play(),t.data("kbtl",g)}})}(jQuery);
+/********************************************
+ * REVOLUTION 5.4.2 EXTENSION - KEN BURN
+ * @version: 1.3.1 (15.05.2017)
+ * @requires jquery.themepunch.revolution.js
+ * @author ThemePunch
+*********************************************/
+(function($) {
+"use strict";
+var _R = jQuery.fn.revolution,
+	extension = {	alias:"KenBurns Min JS",
+					name:"revolution.extensions.kenburn.min.js",
+					min_core: "5.4",
+					version:"1.3.1"
+			  };
+
+///////////////////////////////////////////
+// 	EXTENDED FUNCTIONS AVAILABLE GLOBAL  //
+///////////////////////////////////////////
+jQuery.extend(true,_R, {
+
+	stopKenBurn : function(l) {		
+		if (_R.compare_version(extension).check==="stop") return false;
+
+		if (l.data('kbtl')!=undefined)			
+		l.data('kbtl').pause();				
+	},
+
+	startKenBurn :  function(l,opt,prgs) {		
+
+		if (_R.compare_version(extension).check==="stop") return false;
+
+		var d = l.data(),
+			i = l.find('.defaultimg'),
+			s = i.data('lazyload') || i.data('src'),
+			i_a = d.owidth / d.oheight,
+			cw = opt.sliderType==="carousel" ?  opt.carousel.slide_width : opt.ul.width(),
+			ch = opt.ul.height(),
+			c_a = cw / ch;
+
+		
+		if (l.data('kbtl'))
+			l.data('kbtl').kill();
+		
+
+		prgs = prgs || 0;
+
+	
+		// NO KEN BURN IMAGE EXIST YET
+		if (l.find('.tp-kbimg').length==0) {
+			var mediafilter = i.data('mediafilter');
+			mediafilter = mediafilter === undefined ? "" : mediafilter;
+			l.append('<div class="tp-kbimg-wrap '+mediafilter+'" style="z-index:2;width:100%;height:100%;top:0px;left:0px;position:absolute;"><img class="tp-kbimg" src="'+s+'" style="position:absolute;" width="'+d.owidth+'" height="'+d.oheight+'"></div>');
+			l.data('kenburn',l.find('.tp-kbimg'));
+		}
+
+		var getKBSides = function(w,h,f,cw,ch,ho,vo) {			
+					var tw = w * f,
+						th = h * f,
+						hd = Math.abs(cw-tw),
+						vd = Math.abs(ch-th),
+						s = new Object();
+					s.l = (0-ho)*hd;
+					s.r = s.l + tw;			
+					s.t = (0-vo)*vd;
+					s.b = s.t + th;	
+					s.h = ho;
+					s.v = vo;
+					return s;
+				},
+
+			getKBCorners = function(d,cw,ch,ofs,o) {
+
+				var p = d.bgposition.split(" ") || "center center",
+					ho = p[0] == "center"  ? "50%" : p[0] == "left" || p [1] == "left" ? "0%" : p[0]=="right" || p[1] =="right" ? "100%" : p[0],
+					vo = p[1] == "center" ? "50%" : p[0] == "top" || p [1] == "top" ? "0%" : p[0]=="bottom" || p[1] =="bottom" ? "100%" : p[1];
+				
+				ho = parseInt(ho,0)/100 || 0;
+				vo = parseInt(vo,0)/100 || 0;
+
+
+				var sides = new Object();
+
+
+				sides.start = getKBSides(o.start.width,o.start.height,o.start.scale,cw,ch,ho,vo);
+				sides.end = getKBSides(o.start.width,o.start.height,o.end.scale,cw,ch,ho,vo);
+							
+				return sides;	
+			},
+
+			kcalcL = function(cw,ch,d) {				
+				var f=d.scalestart/100,
+					fe=d.scaleend/100,
+					ofs = d.offsetstart != undefined ? d.offsetstart.split(" ") || [0,0] : [0,0],
+					ofe = d.offsetend != undefined ? d.offsetend.split(" ") || [0,0] : [0,0];
+				d.bgposition = d.bgposition == "center center" ? "50% 50%" : d.bgposition;
+				
+				
+				var o = new Object(),
+					sw = cw*f,
+					sh = sw/d.owidth * d.oheight,
+					ew = cw*fe,
+					eh = ew/d.owidth * d.oheight;		
+
+
+				
+				o.start = new Object();		
+				o.starto = new Object();
+				o.end = new Object();
+				o.endo = new Object();
+				
+				o.start.width = cw;
+				o.start.height = o.start.width / d.owidth * d.oheight;		
+
+				if (o.start.height<ch) {
+					var newf = ch / o.start.height;
+					o.start.height = ch;
+					o.start.width = o.start.width*newf;
+				}
+				o.start.transformOrigin = d.bgposition;					
+				o.start.scale = f;	
+				o.end.scale = fe;
+
+				d.rotatestart = d.rotatestart===0 ? 0.01 : d.rotatestart;
+				o.start.rotation = d.rotatestart+"deg";
+				o.end.rotation = d.rotateend+"deg";		
+				
+				// MAKE SURE THAT OFFSETS ARE NOT TOO HIGH
+				var c = getKBCorners(d,cw,ch,ofs,o);
+
+
+				ofs[0] = parseFloat(ofs[0]) + c.start.l;
+				ofe[0] = parseFloat(ofe[0]) + c.end.l;
+				
+				ofs[1] = parseFloat(ofs[1]) + c.start.t;			
+				ofe[1] = parseFloat(ofe[1]) + c.end.t;
+					
+				var iws = c.start.r - c.start.l,
+					ihs	= c.start.b - c.start.t,
+					iwe = c.end.r - c.end.l,
+					ihe	= c.end.b - c.end.t;
+						
+				ofs[0] = ofs[0]>0 ? 0 : iws + ofs[0] < cw ? cw-iws : ofs[0];
+				ofe[0] = ofe[0]>0 ? 0 : iwe + ofe[0] < cw ? cw-iwe : ofe[0];
+				
+				ofs[1] = ofs[1]>0 ? 0 : ihs + ofs[1] < ch ? ch-ihs : ofs[1];
+				ofe[1] = ofe[1]>0 ? 0 : ihe + ofe[1] < ch ? ch-ihe : ofe[1];
+
+				
+
+				o.starto.x = ofs[0]+"px";
+				o.starto.y = ofs[1]+"px";
+				o.endo.x = ofe[0]+"px";
+				o.endo.y = ofe[1]+"px";				
+				o.end.ease = o.endo.ease = d.ease;
+				o.end.force3D = o.endo.force3D = true;
+				return o;
+			};
+		
+		if (l.data('kbtl')!=undefined) {
+			l.data('kbtl').kill();
+			l.removeData('kbtl');
+		}
+
+		var k = l.data('kenburn'),
+			kw = k.parent(),
+			anim = kcalcL(cw,ch,d),
+			kbtl =  new punchgs.TimelineLite();
+		
+		
+		kbtl.pause();
+
+
+		
+		anim.start.transformOrigin = "0% 0%";
+		anim.starto.transformOrigin = "0% 0%";	
+
+		kbtl.add(punchgs.TweenLite.fromTo(k,d.duration/1000,anim.start,anim.end),0);
+		kbtl.add(punchgs.TweenLite.fromTo(kw,d.duration/1000,anim.starto,anim.endo),0);
+
+		// ADD BLUR EFFECT ON THE ELEMENTS
+		if (d.blurstart!==undefined && d.blurend!==undefined &&  (d.blurstart!==0 || d.blurend!==0)) {
+			var blurElement = {a:d.blurstart},				
+				blurElementEnd = {a:d.blurend, ease:anim.endo.ease},
+				blurAnimation = new punchgs.TweenLite(blurElement, d.duration/1000, blurElementEnd);
+
+			blurAnimation.eventCallback("onUpdate", function(kw) {				
+				punchgs.TweenLite.set(kw,{filter:'blur('+blurElement.a+'px)',webkitFilter:'blur('+blurElement.a+'px)'});
+			},[kw]);
+			kbtl.add(blurAnimation,0);			
+		}
+			
+		kbtl.progress(prgs);
+		kbtl.play();	
+		
+		l.data('kbtl',kbtl);														
+	}		
+});
+
+})(jQuery);

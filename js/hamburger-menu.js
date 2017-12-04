@@ -1,1 +1,64 @@
-function bindEvent(e,n,t){e.addEventListener?e.addEventListener(n,t,!1):e.attachEvent&&e.attachEvent("on"+n,t)}!function(){function e(){i?(classie.remove(n,"show-menu"),$(".full-width-pull-menu").length&&(classie.remove(n,"overflow-hidden"),classie.remove(n,"position-fixed"))):(classie.add(n,"show-menu"),$(".full-width-pull-menu").length&&(classie.add(n,"overflow-hidden"),classie.add(n,"position-fixed"))),i=!i}var n=document.body,t=document.getElementById("open-button"),d=document.getElementById("close-button"),i=!1;t&&bindEvent(t,"click",e),d&&bindEvent(d,"click",e)}();
+/*==============================================================
+    pull menu
+ ==============================================================*/
+
+function bindEvent(el, eventName, eventHandler) {
+    if (el.addEventListener) {
+        el.addEventListener(eventName, eventHandler, false);
+    } else if (el.attachEvent) {
+        el.attachEvent('on' + eventName, eventHandler);
+    }
+}
+
+(function () {
+
+    var bodyEl = document.body,
+            //content = document.querySelector( '.content-wrap' ),
+            openbtn = document.getElementById('open-button'),
+            closebtn = document.getElementById('close-button'),
+            isOpen = false;
+
+    function init() {
+        initEvents();
+    }
+
+    function initEvents() {
+        if (openbtn) {
+            bindEvent(openbtn, 'click', toggleMenu);
+
+        }
+        //openbtn.addEventListener( 'click', toggleMenu );
+        if (closebtn) {
+
+            bindEvent(closebtn, 'click', toggleMenu);
+            //closebtn.addEventListener( 'click', toggleMenu );
+        }
+
+        // close the menu element if the target itÂ´s not the menu element or one of its descendants..
+
+    }
+
+    function toggleMenu() {
+
+        if (isOpen) {
+            classie.remove(bodyEl, 'show-menu');
+             if ( $( ".full-width-pull-menu" ).length ) {
+                 classie.remove(bodyEl, 'overflow-hidden');
+                 classie.remove(bodyEl, 'position-fixed');
+            }
+        }
+        else {
+            classie.add(bodyEl, 'show-menu');
+            
+            if ( $( ".full-width-pull-menu" ).length ) {
+                classie.add(bodyEl, 'overflow-hidden');
+                classie.add(bodyEl, 'position-fixed');
+            }
+           
+        }
+        isOpen = !isOpen;
+    }
+
+    init();
+
+})();

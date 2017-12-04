@@ -1,1 +1,1 @@
-window.tplogs=!0;
+window.tplogs = true;
